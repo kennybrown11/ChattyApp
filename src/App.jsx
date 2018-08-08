@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Bob"},
+      currentUser: {name: ''},
       messages:[
         {
           id: "1",
@@ -21,7 +21,15 @@ class App extends Component {
       ]
     };
   }
+
+
+
   componentDidMount() {
+    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket.onopen = () => {
+    console.log('Connected to server');
+    }  
+    
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -34,6 +42,26 @@ class App extends Component {
     }, 3000);
   }
 
+  newMessage(event) {
+    if (event.key === 'Enter') {
+      const message = {
+        username: this.state.currentUser.name,
+        content: event.target.value,
+        id: new Date().toString()
+      }
+      this.socket.send(JSON.stringify(message));
+      this.setState({messages: this.state.messages.concat(message)});
+      event.target.value = '';
+    }
+  }
+
+  
+  newUser(event) {
+    const username = event.target.value;
+    this.setState({currentUser: {name: username}});
+  }  
+
+
   render() {
     console.log("Rendering <App/>")
     return (
@@ -42,7 +70,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} />
+        <ChatBar currentUser={this.state.currentUser.name} handleNewMessage={this.newMessage.bind(this)} handleNewUser={this.newUser.bind(this)}/>
       </div>
     );
   }
