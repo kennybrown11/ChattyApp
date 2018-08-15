@@ -1,7 +1,8 @@
 $theme: #7da0c5;
+$white: whitesmoke;
 
 body {
-  background: white;
+  background: $white;
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -37,6 +38,10 @@ body {
   flex: 2;
 }
 
+.counter {
+  float: right
+}
+
 .message {
   display: flex;
   padding: 5px;
@@ -55,7 +60,7 @@ body {
 }
 
 .message-content {
-  flex: 8;
+  flex: 10;
 }
 
 .message-username {
@@ -63,8 +68,25 @@ body {
   font-weight: 700;
 }
 
+.foreign-user {
+  background: white;
+}
+
+.primary-user {
+  background: $theme;
+  color: white;
+  position: absolute;
+  right: 20px;
+}
+
+.notification {
+  font-style: italic;
+  background: $white
+}
+
 .navbar {
   background: $theme;
+  color: $white;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -72,6 +94,7 @@ body {
   position: fixed;
   right: 0;
   top: 0;
+  font-family: 'Lobster', cursive;
 }
 
 .navbar-brand {

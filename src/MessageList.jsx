@@ -10,7 +10,8 @@ class MessageList extends Component {
                   key={post.id}
                   username={post.username}
                   content={post.content}
-                  type={post.type} />
+                  type={post.type}
+                  />
     })
     return (
       <div>

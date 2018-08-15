@@ -6,13 +6,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: ''},
+      currentUser: {name: 'Anonymous'},
       messages:[],
-      currentUsers: 0
+      currentUsers: 0,
     };
     this.newUser = this.newUser.bind(this);
     this.newMessage = this.newMessage.bind(this)
-  }
+  };
 
 
 
@@ -21,19 +21,18 @@ class App extends Component {
     this.socket = new WebSocket('ws://localhost:3001');
     this.socket.onopen = () => {
     console.log('Connected to server');
-    }  
+    };  
 
     this.socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if(message.type === 'incomingClientSize'){
         this.setState({
-          currentUsers: message.clientSize
+          currentUsers: message.clientSize,
         });
       }
       const messages = this.state.messages.concat(message);
-      this.setState({messages: messages}) 
-    }  
-
+      this.setState({messages: messages}); 
+    };  
   }
 
   newMessage(event) {
@@ -42,11 +41,11 @@ class App extends Component {
         username: this.state.currentUser.name,
         content: event.target.value,
         id: new Date().toString(),
-        type: 'postMessage'
+        type: 'postMessage',
       }
       this.socket.send(JSON.stringify(message));
       event.target.value = '';
-    }
+    };
   }
 
   
@@ -72,12 +71,12 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
           <span className="counter">{this.state.currentUsers} users online!</span>
         </nav>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} currentUser={this.state.currentUser.name}/>
         <ChatBar currentUser={this.state.currentUser.name}
         handleNewMessage={this.newMessage}
         handleNewUser={this.newUser}/>
       </div>
     );
   }
-}
+};
 export default App;
