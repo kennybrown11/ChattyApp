@@ -1,4 +1,4 @@
-#ChattyApp
+# ChattyApp
 
 
 A simple chat web application utilizing websocket technology. Features include coloured usernames and ability to display images/gifs. System will notify all users of any username changes.
@@ -20,7 +20,7 @@ node server.js
 open http://localhost:3000
 ```
 
-##Dependencies
+### Dependencies
 
 * React
 * Webpack
